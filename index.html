@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PromptForge</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <canvas id="motionField" aria-hidden="true"></canvas>
+    <div class="shell">
+      <aside class="rail" aria-label="Primary">
+        <div class="brand">
+          <span class="brand-mark">PF</span>
+          <span>PromptForge</span>
+        </div>
+        <nav class="nav">
+          <button class="nav-button active" data-view="practice" title="Practice" aria-label="Practice">
+            <span>Practice</span>
+          </button>
+          <button class="nav-button" data-view="history" title="History" aria-label="History">
+            <span>History</span>
+          </button>
+          <button class="nav-button" data-view="leaderboard" title="Leaderboard" aria-label="Leaderboard">
+            <span>Leaderboard</span>
+          </button>
+        </nav>
+        <div class="profile">
+          <span id="profileName">Guest</span>
+          <button id="logoutButton" class="ghost-button">Logout</button>
+        </div>
+      </aside>
+
+      <main class="stage">
+        <section id="authPanel" class="auth-panel">
+          <div class="auth-card">
+            <div class="auth-content">
+              <p class="eyebrow">Prompt training lab</p>
+              <h1>Learn to prompt by testing ideas against output.</h1>
+              <p class="lede">Sign in with a handle, complete image prompt challenges with cleaner AI-style reference scenes, compare generated output to the target, and climb the board.</p>
+            </div>
+            <form id="loginForm" class="login-form">
+              <label for="username">Player handle</label>
+              <div class="login-row">
+                <input id="username" name="username" autocomplete="nickname" maxlength="24" placeholder="e.g. VisionPilot">
+                <button type="submit">Enter</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section id="appPanel" class="app-panel hidden">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Image prompt practice</p>
+              <h1>Prompt skill arena</h1>
+            </div>
+            <div class="stats">
+              <div>
+                <span id="statLevel">1</span>
+                <small>Level</small>
+              </div>
+              <div>
+                <span id="statXp">0</span>
+                <small>XP</small>
+              </div>
+              <div>
+                <span id="statRank">Rookie</span>
+                <small>Rank</small>
+              </div>
+            </div>
+          </header>
+
+          <section id="practiceView" class="view active-view">
+            <div class="practice-grid">
+              <article class="mission-panel">
+                <div class="mission-top">
+                  <span id="missionLevel" class="level-pill">Level 1</span>
+                  <span id="missionType" class="mission-type">Observation</span>
+                </div>
+                <h2 id="missionTitle">Say what you see</h2>
+                <p id="missionBrief"></p>
+                <h3>Target image</h3>
+                <p class="subtle">Realistic AI-style reference visuals for cleaner practice and learning.</p>
+                <div id="sceneCard" class="scene-card" aria-label="Target practice image"></div>
+                <div class="requirements" id="requirements"></div>
+              </article>
+
+              <article class="work-panel">
+                <div class="panel-head">
+                  <h2>Your prompt</h2>
+                  <button id="newMissionButton" class="ghost-button">New challenge</button>
+                </div>
+                <textarea id="promptInput" rows="10" placeholder="Prompt the AI image tool to recreate the target image. Include objects, colors, layout, style, and constraints."></textarea>
+                <div class="action-row">
+                  <button id="evaluateButton" class="primary-button">Generate image</button>
+                  <button id="hintButton" class="ghost-button">Hint</button>
+                </div>
+                <p id="hintText" class="hint"></p>
+              </article>
+            </div>
+
+            <section id="resultPanel" class="result-panel hidden">
+              <div class="result-score">
+                <span id="scoreValue">0</span>
+                <small id="statusValue">Status</small>
+              </div>
+              <div class="result-copy">
+                <h2>Image comparison</h2>
+                <p id="aiOutput"></p>
+                <div class="comparison-grid">
+                  <div>
+                    <h3>Target</h3>
+                    <div id="targetPreview" class="scene-card compact" aria-label="Target preview"></div>
+                  </div>
+                  <div>
+                    <h3>Your generated image</h3>
+                    <div id="generatedPreview" class="scene-card compact" aria-label="Generated preview"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="feedback-list" id="feedbackList"></div>
+            </section>
+
+            <section id="solutionPanel" class="solution-panel hidden">
+              <div class="section-head">
+                <h2>Prompts that could produce this image</h2>
+                <span class="subtle">Shown after your attempt</span>
+              </div>
+              <div id="solutionPrompts" class="solution-list"></div>
+            </section>
+          </section>
+
+          <section id="historyView" class="view">
+            <div class="section-head">
+              <h2>Prompt history</h2>
+              <button id="clearHistoryButton" class="ghost-button">Clear history</button>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </section>
+
+          <section id="leaderboardView" class="view">
+            <div class="section-head">
+              <h2>Leaderboard</h2>
+              <span class="subtle">Local players on this device</span>
+            </div>
+            <div id="leaderboardList" class="leaderboard-list"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
